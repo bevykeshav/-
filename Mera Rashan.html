@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mera Rashan</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&display=swap">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#edf1ec;--card:#fbfcfa;--tx:#17261f;--mu:#66756c;--bd:#d6ded7;--ac:#1f6b4a;--acs:#dcebe2;--wn:#b97a00;--wns:#f7ebcf;--rd:#b8322a;--rds:#f6dcd9;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a15;--card:#1a251e;--tx:#e6efe8;--mu:#93a499;--bd:#2c3b31;--ac:#58c08a;--acs:#1f3a2b;--wn:#e8b44a;--wns:#3a2f12;--rd:#ef7f76;--rds:#40201d;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121a15;--card:#1a251e;--tx:#e6efe8;--mu:#93a499;--bd:#2c3b31;--ac:#58c08a;--acs:#1f3a2b;--wn:#e8b44a;--wns:#3a2f12;--rd:#ef7f76;--rds:#40201d;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Hind","Noto Sans Devanagari",system-ui,sans-serif;font-size:16px;line-height:1.45}
+.wrap{max-width:720px;margin:0 auto;padding:18px 14px 80px}
+h1{font-size:28px;margin:0;font-weight:700;letter-spacing:-.2px}
+.sub{color:var(--mu);margin:2px 0 16px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.st{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px 12px}
+.st b{display:block;font-size:26px;line-height:1.1}
+.st span{color:var(--mu);font-size:13px}
+.st.r b{color:var(--rd)}.st.w b{color:var(--wn)}
+.need{background:var(--wns);border:1px solid var(--wn);border-radius:10px;padding:12px 14px;margin-bottom:14px}
+.need h2{font-size:17px;margin:0 0 6px}
+.need ul{margin:0 0 10px;padding-left:18px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:7px 12px;min-height:38px}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+button.p{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
+:root:not([data-theme="light"]) button.p{color:#0c1710}
+button.d{color:var(--rd)}
+.tabs{display:flex;gap:6px;margin:4px 0 12px;overflow-x:auto}
+.tabs button{border-radius:20px;white-space:nowrap}
+.tabs button.on{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.it{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.it.k0{border-left:5px solid var(--rd)}.it.k1{border-left:5px solid var(--wn)}.it.k2{border-left:5px solid var(--ac)}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.nm{font-size:18px;font-weight:600}
+.meta{color:var(--mu);font-size:13.5px}
+.left{text-align:right;white-space:nowrap}
+.left b{font-size:22px;display:block;line-height:1.1}
+.k0 .left b{color:var(--rd)}.k1 .left b{color:var(--wn)}.k2 .left b{color:var(--ac)}
+.left span{font-size:12.5px;color:var(--mu)}
+.bar{height:10px;border-radius:5px;background:var(--bd);margin:10px 0 8px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:5px}
+.k0 .bar i{background:var(--rd)}.k1 .bar i{background:var(--wn)}.k2 .bar i{background:var(--ac)}
+.acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.acts button{font-size:14px;padding:5px 10px;min-height:34px}
+.empty{color:var(--mu);text-align:center;padding:30px 0}
+.foot{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+dialog{border:1px solid var(--bd);border-radius:12px;background:var(--card);color:var(--tx);width:min(420px,92vw);padding:16px}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+label{display:block;font-size:13.5px;color:var(--mu);margin:10px 0 3px}
+input,select,textarea{width:100%;font:inherit;padding:8px 10px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--tx)}
+textarea{min-height:130px;font-size:12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hint{font-size:12.5px;color:var(--mu);margin-top:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Mera Rashan</h1>
+  <p class="sub" id="sub"></p>
+  <div class="stats" id="stats"></div>
+  <div id="need"></div>
+  <div class="tabs" id="tabs"></div>
+  <div id="list"></div>
+  <div class="foot">
+    <button class="p" id="add">+ Naya saman</button>
+    <button id="bk">Backup / Restore</button>
+  </div>
+</div>
+
+<dialog id="dlg">
+  <div id="dt" style="font-weight:700;font-size:18px"></div>
+  <label>Saman ka naam</label><input id="f_name">
+  <div class="two">
+    <div><label>Matra</label><input id="f_qty" type="number" step="any" min="0"></div>
+    <div><label>Unit</label><select id="f_unit"><option>kg</option><option>packet</option><option>pcs</option><option>litre</option></select></div>
+  </div>
+  <div class="two">
+    <div><label>Kharidne ki tarikh</label><input id="f_buy" type="date"></div>
+    <div><label>Kitne din chalega</label><input id="f_days" type="number" min="1"></div>
+  </div>
+  <label>Daam (Rs, optional)</label><input id="f_price" type="number" step="any" min="0">
+  <div class="row" style="margin-top:14px;justify-content:flex-end">
+    <button id="f_cancel">Band karo</button><button class="p" id="f_save">Save karo</button>
+  </div>
+</dialog>
+
+<dialog id="bdlg">
+  <div style="font-weight:700;font-size:18px">Backup / Restore</div>
+  <p class="hint">Data sirf is browser mein save hota hai. Neeche ka text copy karke kahin rakh lo. Restore karne ke liye purana text yahan paste karke Restore dabao.</p>
+  <textarea id="bt"></textarea>
+  <div class="row" style="margin-top:12px;justify-content:flex-end">
+    <button id="b_copy">Copy karo</button><button id="b_rest" class="p">Restore karo</button><button id="b_close">Band karo</button>
+  </div>
+</dialog>
+
+<script>
+const KEY='rashan_tracker_v1';
+const D0=new Date();D0.setHours(0,0,0,0);
+const pd=s=>{const[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c)};
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const diff=(a,b)=>Math.round((a-b)/864e5);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmtD=d=>d.toLocaleDateString('en-IN',{day:'numeric',month:'short'});
+const T=iso(D0);
+const mk=(name,qty,unit,price,days)=>({id:Math.random().toString(36).slice(2,9),name,qty,unit,price,buy:'2026-11-04',days});
+function seed(){return[
+ mk('Chana',1.786,'kg',176.81,20),mk('Masoor Malka (dal)',2.32,'kg',178.64,20),mk('Arhar / Toor Dal',1.442,'kg',212.7,20),
+ mk('Chawal (LG Rice)',6.456,'kg',348.62,25),mk('Besan',1.694,'kg',155.85,25),mk('Mungfali (Groundnut)',1.368,'kg',217.51,25),
+ mk('Cheeni (Sugar)',2.006,'kg',132.4,15),mk('Soyawadi (Soya chunks)',0.37,'kg',30.34,10),mk('Tata Namak 1kg',1,'packet',30,30),
+ mk('Mirch powder (DK)',1,'packet',64,30),mk('Dhania powder 100g (DK)',1,'packet',24.5,30),mk('Haldi powder 100g (DK)',2,'packet',64,60),
+ mk('Vishal Rozana 200g',1,'packet',45,15),mk('Vishal Rozana 400g',1,'packet',85,20),mk('Shree Ram Soan Papdi 400g',1,'packet',69,7),
+ mk('Patanjali 900g',1,'packet',73,25),mk('Fena Jasmine 1kg',1,'packet',74,25),mk('Gala Super Scrub',1,'pcs',37,30)]}
+const HI={'Chana':'चना','Masoor Malka (dal)':'मसूर मलका दाल','Arhar / Toor Dal':'अरहर / तूर दाल','Chawal (LG Rice)':'चावल (LG राइस)','Besan':'बेसन','Mungfali (Groundnut)':'मूंगफली','Cheeni (Sugar)':'चीनी','Soyawadi (Soya chunks)':'सोयाबड़ी','Tata Namak 1kg':'टाटा नमक 1 किग्रा','Mirch powder (DK)':'मिर्च पाउडर (DK)','Dhania powder 100g (DK)':'धनिया पाउडर 100 ग्राम (DK)','Haldi powder 100g (DK)':'हल्दी पाउडर 100 ग्राम (DK)','Vishal Rozana 200g':'विशाल रोज़ाना 200 ग्राम','Vishal Rozana 400g':'विशाल रोज़ाना 400 ग्राम','Shree Ram Soan Papdi 400g':'श्री राम सोन पापड़ी 400 ग्राम','Patanjali 900g':'पतंजलि 900 ग्राम','Fena Jasmine 1kg':'फेना जैस्मिन 1 किग्रा','Gala Super Scrub':'गाला सुपर स्क्रब'};
+let items=load(),filter='all',editId=null;
+function load(){try{const r=localStorage.getItem(KEY);if(r){const a=JSON.parse(r);if(Array.isArray(a)){a.forEach(x=>{if(HI[x.name])x.name=HI[x.name]});return a}}}catch(e){}return seed().map(x=>({...x,name:HI[x.name]||x.name}))}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(items))}catch(e){}}
+function calc(it){
+  const end=addD(pd(it.buy),it.days),left=diff(end,D0),used=diff(D0,pd(it.buy));
+  const pct=Math.max(0,Math.min(100,Math.round(100-used/it.days*100)));
+  const k=left<=0?0:left<=5?1:2;
+  return{end,left,used,pct,k};
+}
+function rate(it){const p=it.qty/it.days;return it.unit==='kg'||it.unit==='litre'?Math.round(p*1000)+(it.unit==='kg'?' g':' ml')+'/din':p.toFixed(2)+' '+it.unit+'/din'}
+function qtyTxt(it){return(it.unit==='kg'||it.unit==='litre'?(+it.qty).toFixed(3).replace(/\.?0+$/,''):it.qty)+' '+it.unit}
+function render(){
+  const cs=items.map(it=>({it,c:calc(it)})).sort((a,b)=>a.c.left-b.c.left);
+  const out=cs.filter(x=>x.c.k===0).length,soon=cs.filter(x=>x.c.k===1).length;
+  document.getElementById('sub').textContent='Aaj: '+fmtD(D0)+'  |  '+items.length+' saman track ho raha hai';
+  document.getElementById('stats').innerHTML=
+   '<div class="st r"><b>'+out+'</b><span>Khatam ho gaya</span></div>'+
+   '<div class="st w"><b>'+soon+'</b><span>5 din mein khatam</span></div>'+
+   '<div class="st"><b>'+(items.length-out-soon)+'</b><span>Abhi theek hai</span></div>';
+  const urgent=cs.filter(x=>x.c.k<2);
+  document.getElementById('need').innerHTML=urgent.length?
+   '<div class="need"><h2>Is hafte lana hai</h2><ul>'+urgent.map(x=>'<li>'+esc(x.it.name)+' ('+qtyTxt(x.it)+')</li>').join('')+'</ul>'+
+   '<div class="row"><button id="wa">WhatsApp par bhejo</button><button id="cp">List copy karo</button></div></div>':'';
+  const tabs=[['all','Sab'],['0','Khatam'],['1','Jaldi'],['2','Theek']];
+  document.getElementById('tabs').innerHTML=tabs.map(t=>'<button data-tab="'+t[0]+'" class="'+(filter===t[0]?'on':'')+'">'+t[1]+'</button>').join('');
+  const shown=cs.filter(x=>filter==='all'||String(x.c.k)===filter);
+  document.getElementById('list').innerHTML=shown.length?shown.map(({it,c})=>{
+    const big=c.left<=0?(c.left===0?'Aaj':Math.abs(c.left)+' din pehle'):c.left+' din';
+    const lab=c.left<=0?'khatam':'baaki';
+    return '<div class="it k'+c.k+'"><div class="top"><div><div class="nm">'+esc(it.name)+'</div>'+
+     '<div class="meta">'+qtyTxt(it)+' | kharida '+fmtD(pd(it.buy))+' | '+rate(it)+(it.price?' | Rs '+it.price:'')+'</div></div>'+
+     '<div class="left"><b>'+big+'</b><span>'+lab+(c.left>0?' ('+fmtD(c.end)+')':'')+'</span></div></div>'+
+     '<div class="bar"><i style="width:'+c.pct+'%"></i></div>'+
+     '<div class="acts"><button data-a="buy" data-id="'+it.id+'">Dobara kharida</button>'+
+     (c.left>0?'<button data-a="fin" data-id="'+it.id+'">Khatam ho gaya</button>':'')+
+     '<button data-a="edit" data-id="'+it.id+'">Badlo</button><button class="d" data-a="del" data-id="'+it.id+'">Hatao</button></div></div>';
+  }).join(''):'<div class="empty">Is list mein koi saman nahi hai.</div>';
+}
+function listText(){
+  const u=items.map(it=>({it,c:calc(it)})).filter(x=>x.c.k<2).sort((a,b)=>a.c.left-b.c.left);
+  return 'Rashan list ('+fmtD(D0)+'):\n'+u.map(x=>'- '+x.it.name+' ('+qtyTxt(x.it)+')').join('\n');
+}
+async function copyText(t,btn){
+  try{await navigator.clipboard.writeText(t);if(btn){const o=btn.textContent;btn.textContent='Copy ho gaya';setTimeout(()=>btn.textContent=o,1500)}}
+  catch(e){const ta=document.getElementById('bt');if(btn)btn.textContent='Manually copy karo'}
+}
+function openForm(id){
+  editId=id;const it=items.find(x=>x.id===id)||{name:'',qty:1,unit:'kg',price:'',buy:T,days:30};
+  document.getElementById('dt').textContent=id?'Saman badlo':'Naya saman';
+  f_name.value=it.name;f_qty.value=it.qty;f_unit.value=it.unit;f_buy.value=it.buy;f_days.value=it.days;f_price.value=it.price||'';
+  dlg.showModal();
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.tab){filter=b.dataset.tab;render();return}
+  const a=b.dataset.a,it=items.find(x=>x.id===b.dataset.id);
+  if(a==='buy'&&it){it.buy=T;save();render()}
+  else if(a==='fin'&&it){it.days=Math.max(1,calc(it).used);save();render()}
+  else if(a==='edit'&&it)openForm(it.id);
+  else if(a==='del'&&it){if(b.dataset.sure){items=items.filter(x=>x.id!==it.id);save();render()}else{b.dataset.sure=1;b.textContent='Pakka hatao?';setTimeout(()=>{b.dataset.sure='';b.textContent='Hatao'},2500)}}
+  else if(b.id==='add')openForm(null);
+  else if(b.id==='wa')window.open('https://wa.me/?text='+encodeURIComponent(listText()),'_blank');
+  else if(b.id==='cp')copyText(listText(),b);
+  else if(b.id==='bk'){bt.value=JSON.stringify(items);bdlg.showModal()}
+  else if(b.id==='b_close')bdlg.close();
+  else if(b.id==='b_copy')copyText(bt.value,b);
+  else if(b.id==='b_rest'){try{const a=JSON.parse(bt.value);if(Array.isArray(a)&&a.every(x=>x.name&&x.buy&&x.days)){items=a;save();render();bdlg.close()}else b.textContent='Data galat hai'}catch(x){b.textContent='Data galat hai'}}
+  else if(b.id==='f_cancel')dlg.close();
+  else if(b.id==='f_save'){
+    const o={name:f_name.value.trim(),qty:parseFloat(f_qty.value)||1,unit:f_unit.value,buy:f_buy.value||T,days:Math.max(1,parseInt(f_days.value)||30),price:parseFloat(f_price.value)||0};
+    if(!o.name){f_name.focus();return}
+    if(editId){Object.assign(items.find(x=>x.id===editId),o)}else{o.id=Math.random().toString(36).slice(2,9);items.push(o)}
+    save();render();dlg.close();
+  }
+});
+render();
+</script>
+</body>
+</html>
