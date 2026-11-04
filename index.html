@@ -56,6 +56,33 @@ input,select,textarea{width:100%;font:inherit;padding:8px 10px;border-radius:8px
 textarea{min-height:130px;font-size:12px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .hint{font-size:12.5px;color:var(--mu);margin-top:4px}
+html{-webkit-text-size-adjust:100%}
+body{-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+button{touch-action:manipulation}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.wrap{padding:14px 12px 110px}
+h1{font-size:26px}
+.nm{overflow-wrap:anywhere}
+.meta{overflow-wrap:anywhere}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:8px 0;margin:0 0 6px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{min-height:42px;padding:6px 16px;flex:1}
+.foot{position:fixed;left:0;right:0;bottom:0;z-index:6;margin:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--bd);flex-wrap:nowrap}
+.foot button{flex:1;min-height:48px;font-size:16px}
+.foot button.p{flex:2}
+.need .row button{flex:1;min-height:46px}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.acts button{min-height:44px;font-size:15px;padding:8px 6px}
+input,select{min-height:46px;font-size:16px}
+textarea{font-size:14px}
+@media (max-width:520px){
+ .stats{gap:6px}.st{padding:8px 10px}.st b{font-size:24px}.st span{font-size:12px}
+ .it{padding:12px}
+ .left b{font-size:20px}
+ dialog{margin:auto 0 0;width:100%;max-width:100%;border-radius:18px 18px 0 0;padding:16px 14px calc(16px + env(safe-area-inset-bottom,0px));max-height:92dvh;overflow:auto}
+ dialog .row button{flex:1;min-height:48px}
+}
+@media (min-width:700px){.foot{left:50%;right:auto;width:720px;transform:translateX(-50%);border:1px solid var(--bd);border-radius:12px 12px 0 0}}
 </style>
 </head>
 <body>
