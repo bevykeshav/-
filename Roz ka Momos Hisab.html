@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Roz ka Momos Hisab</title>
+<style>
+:root{--bg:#eef3f1;--card:#fff;--ink:#17302b;--mute:#5d726d;--line:#d3dfdb;--brand:#0f6b5c;--brand-ink:#fff;--bad:#b3261e;--warn:#9a6200;--ok:#0f6b5c;--chip:#e3f0ec;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1c19;--card:#172823;--ink:#e6f1ee;--mute:#9bb3ad;--line:#2a403a;--brand:#3fc2aa;--brand-ink:#06201b;--bad:#ff8a80;--warn:#f1b84b;--ok:#5fd8bf;--chip:#1f3730;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1c19;--card:#172823;--ink:#e6f1ee;--mute:#9bb3ad;--line:#2a403a;--brand:#3fc2aa;--brand-ink:#06201b;--bad:#ff8a80;--warn:#f1b84b;--ok:#5fd8bf;--chip:#1f3730;color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif}
+main{max-width:640px;margin:0 auto;padding:16px 14px 40px}
+h1{font-size:1.35rem;margin:0 0 2px}
+.sub{color:var(--mute);margin:0 0 14px;font-size:.92rem}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+h2{font-size:1rem;margin:0 0 10px}
+.hint{color:var(--mute);font-size:.85rem;margin:-4px 0 10px}
+label{display:block;font-size:.85rem;color:var(--mute);margin-bottom:3px}
+input[type=number],input[type=text],input[type=date]{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;min-height:44px}
+input:focus-visible,button:focus-visible{outline:3px solid var(--brand);outline-offset:1px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.row{display:grid;grid-template-columns:64px 1fr 1fr 1fr;gap:8px;align-items:end;margin-bottom:8px}
+.row b{padding-bottom:12px}
+.colh{font-size:.8rem;color:var(--mute)}
+details summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+.exp{display:grid;grid-template-columns:1fr 100px 44px;gap:8px;margin-bottom:8px}
+button{font:inherit;min-height:44px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:0 14px;cursor:pointer}
+button.main{background:var(--brand);color:var(--brand-ink);border-color:var(--brand);font-weight:600}
+.chk{display:flex;gap:8px;align-items:center;margin-top:8px;color:var(--ink);font-size:.95rem}
+.chk input{width:22px;height:22px}
+#res{position:sticky;bottom:8px;border:2px solid var(--brand)}
+.big{font-size:1.5rem;font-weight:700;margin:2px 0 8px}
+.big.bad{color:var(--bad)}.big.warn{color:var(--warn)}.big.ok{color:var(--ok)}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+td{padding:3px 0;vertical-align:top}td:last-child{text-align:right;white-space:nowrap}
+tr.sep td{border-top:1px solid var(--line);padding-top:6px;font-weight:600}
+.note{font-size:.85rem;color:var(--warn);margin:6px 0 0}
+.acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.hist{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line)}
+.hist small{color:var(--mute)}
+.tag{background:var(--chip);border-radius:6px;padding:2px 8px;font-size:.85rem}
+@media (prefers-reduced-motion:no-preference){.big{transition:color .2s}}
+</style>
+</head>
+<body>
+<main>
+<h1>Roz ka Momos Hisab</h1>
+<p class="sub">Dukan band karte waqt numbers bharo, kami turant dikh jayegi.</p>
+
+<section>
+<label for="date">Tareekh</label>
+<input type="date" id="date">
+</section>
+
+<section>
+<h2>Ghar se kitne pcs gaye, bache, kharab</h2>
+<div class="row colh"><span></span><span>Gaye</span><span>Bache</span><span>Kharab</span></div>
+<div class="row"><b>Veg</b><input type="number" inputmode="numeric" id="gV"><input type="number" inputmode="numeric" id="bV"><input type="number" inputmode="numeric" id="kV"></div>
+<div class="row"><b>Paneer</b><input type="number" inputmode="numeric" id="gP"><input type="number" inputmode="numeric" id="bP"><input type="number" inputmode="numeric" id="kP"></div>
+<p class="hint">Bache hue pcs wo jo kal chal jayenge.</p>
+</section>
+
+<section>
+<h2>Kitni plate alag se bani</h2>
+<p class="hint">Inke pcs upar ke bike hue pcs me se apne aap kat jayenge.</p>
+<div class="g3">
+<div><label for="fV">Veg fried</label><input type="number" inputmode="numeric" id="fV"></div>
+<div><label for="fP">Paneer fried</label><input type="number" inputmode="numeric" id="fP"></div>
+<div><label for="cr">Cream momos</label><input type="number" inputmode="numeric" id="cr"></div>
+</div>
+</section>
+
+<section>
+<h2>Kharcha</h2>
+<div id="exps"></div>
+<button type="button" id="addExp">Kharcha jodo</button>
+<label class="chk"><input type="checkbox" id="kCash" checked> Kharcha galle ke cash se diya</label>
+</section>
+
+<section>
+<h2>Paisa mila</h2>
+<div class="g2">
+<div><label for="cash">Cash</label><input type="number" inputmode="numeric" id="cash"></div>
+<div><label for="online">Online</label><input type="number" inputmode="numeric" id="online"></div>
+</div>
+<div style="margin-top:10px"><label for="udh">Udhaar ya free gaya (₹)</label><input type="number" inputmode="numeric" id="udh"></div>
+</section>
+
+<section>
+<details>
+<summary>Rate badlo</summary>
+<div class="g3" style="margin-top:6px">
+<div><label for="rVS">Veg steam plate</label><input type="number" id="rVS" value="60"></div>
+<div><label for="rVF">Veg fried plate</label><input type="number" id="rVF" value="70"></div>
+<div><label for="rPS">Paneer steam plate</label><input type="number" id="rPS" value="80"></div>
+<div><label for="rPF">Paneer fried plate</label><input type="number" id="rPF" value="90"></div>
+<div><label for="rCr">Cream plate</label><input type="number" id="rCr" value="150"></div>
+<div><label for="rPcs">Pcs per plate</label><input type="number" id="rPcs" value="10"></div>
+</div>
+</details>
+</section>
+
+<section id="res" aria-live="polite">
+<div id="verdict" class="big">Numbers bharo</div>
+<table id="tbl"></table>
+<p class="note" id="warn" hidden></p>
+<div class="acts">
+<button type="button" class="main" id="save">Aaj ka hisab save karo</button>
+<button type="button" id="copy">WhatsApp text copy</button>
+<button type="button" id="reset">Naya din</button>
+</div>
+</section>
+
+<section>
+<h2>Purane din</h2>
+<div id="hist"><p class="hint">Abhi kuch save nahi hai.</p></div>
+</section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const num = id => parseFloat($(id).value) || 0;
+const inr = v => "₹" + Math.round(v).toLocaleString("en-IN");
+const INPUTS = ["gV","bV","kV","gP","bP","kP","fV","fP","cr","cash","online","udh"];
+const RATES = ["rVS","rVF","rPS","rPF","rCr","rPcs"];
+let exps = [{n:"Pyaaz",a:""}];
+let last = null;
+
+function store(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+function load(k, d){ try{ const r = localStorage.getItem(k); return r ? JSON.parse(r) : d; }catch(e){ return d; } }
+
+function calc(){
+  const pcs = num("rPcs") || 10;
+  const pv = {vs:num("rVS")/pcs, ps:num("rPS")/pcs};
+  const vegSold = num("gV") - num("bV") - num("kV");
+  const panSold = num("gP") - num("bP") - num("kP");
+  const vegFriedPcs = num("fV") * pcs;
+  const panFriedPcs = num("fP") * pcs;
+  const creamPcs = num("cr") * pcs;
+  const vegSteamPcs = vegSold - vegFriedPcs;
+  const panSteamPcs = panSold - panFriedPcs - creamPcs;
+  const lines = [
+    ["Veg steam", vegSteamPcs + " pcs", vegSteamPcs * pv.vs],
+    ["Veg fried", num("fV") + " plate", num("fV") * num("rVF")],
+    ["Paneer steam", panSteamPcs + " pcs", panSteamPcs * pv.ps],
+    ["Paneer fried", num("fP") + " plate", num("fP") * num("rPF")],
+    ["Cream momos", num("cr") + " plate", num("cr") * num("rCr")]
+  ];
+  const sale = lines.reduce((s, l) => s + l[2], 0);
+  const kharcha = exps.reduce((s, e) => s + (parseFloat(e.a) || 0), 0);
+  const mila = num("cash") + num("online");
+  const udh = num("udh");
+  const expected = sale - udh;
+  const actual = mila + ($("kCash").checked ? kharcha : 0);
+  const wasteLoss = num("kV") * pv.vs + num("kP") * pv.ps;
+  const warns = [];
+  if (vegSteamPcs < 0) warns.push("Veg steam pcs minus me hain. Veg gaye, bache ya fried plate ki ginti check karo.");
+  if (panSteamPcs < 0) warns.push("Paneer steam pcs minus me hain. Paneer gaye, bache, fried ya cream plate ki ginti check karo.");
+  return {lines, sale, kharcha, mila, udh, expected, actual, kami: expected - actual, wasteLoss, warns, vegSold, panSold};
+}
+
+function render(){
+  const r = calc();
+  last = r;
+  const started = r.sale !== 0 || r.mila !== 0;
+  const v = $("verdict");
+  if (!started){ v.className = "big"; v.textContent = "Numbers bharo"; }
+  else if (Math.abs(r.kami) < 0.5){ v.className = "big ok"; v.textContent = "Hisab bilkul sahi"; }
+  else if (r.kami > 0){ v.className = "big bad"; v.textContent = "Kami " + inr(r.kami); }
+  else { v.className = "big warn"; v.textContent = "Zyada " + inr(-r.kami); }
+  let h = r.lines.map(l => `<tr><td>${l[0]} <small>(${l[1]})</small></td><td>${inr(l[2])}</td></tr>`).join("");
+  h += `<tr class="sep"><td>Kul sale</td><td>${inr(r.sale)}</td></tr>`;
+  if (r.udh) h += `<tr><td>Udhaar ya free</td><td>− ${inr(r.udh)}</td></tr><tr><td>Milna chahiye</td><td>${inr(r.expected)}</td></tr>`;
+  h += `<tr><td>Cash + online</td><td>${inr(r.mila)}</td></tr>`;
+  h += `<tr><td>Kharcha ${$("kCash").checked ? "(cash se)" : "(alag se)"}</td><td>${inr(r.kharcha)}</td></tr>`;
+  h += `<tr class="sep"><td>Gina hua total</td><td>${inr(r.actual)}</td></tr>`;
+  if (r.wasteLoss) h += `<tr><td>Kharab maal ka nuksaan</td><td>${inr(r.wasteLoss)}</td></tr>`;
+  $("tbl").innerHTML = h;
+  const w = $("warn");
+  w.hidden = !r.warns.length;
+  w.textContent = r.warns.join(" ");
+}
+
+function renderExps(){
+  $("exps").innerHTML = "";
+  exps.forEach((e, i) => {
+    const d = document.createElement("div");
+    d.className = "exp";
+    d.innerHTML = `<input type="text" placeholder="Kis cheez ka" aria-label="Kharcha naam"><input type="number" inputmode="numeric" placeholder="₹" aria-label="Kharcha rakam"><button type="button" aria-label="Hatao">✕</button>`;
+    const [n, a, b] = d.children;
+    n.value = e.n; a.value = e.a;
+    n.oninput = () => { exps[i].n = n.value; };
+    a.oninput = () => { exps[i].a = a.value; render(); };
+    b.onclick = () => { exps.splice(i, 1); renderExps(); render(); };
+    $("exps").appendChild(d);
+  });
+}
+
+function snapshot(){
+  const o = {date: $("date").value, exps: exps, kCash: $("kCash").checked};
+  INPUTS.forEach(k => o[k] = $(k).value);
+  o.kami = last ? Math.round(last.kami) : 0;
+  o.sale = last ? Math.round(last.sale) : 0;
+  return o;
+}
+
+function renderHist(){
+  const days = load("momosDays", {});
+  const keys = Object.keys(days).sort().reverse();
+  const box = $("hist");
+  if (!keys.length){ box.innerHTML = '<p class="hint">Abhi kuch save nahi hai.</p>'; return; }
+  box.innerHTML = "";
+  keys.forEach(k => {
+    const d = days[k];
+    const row = document.createElement("div");
+    row.className = "hist";
+    const status = Math.abs(d.kami) < 1 ? "sahi" : d.kami > 0 ? "kami " + inr(d.kami) : "zyada " + inr(-d.kami);
+    row.innerHTML = `<div><b>${k}</b><br><small>Sale ${inr(d.sale)}</small> <span class="tag">${status}</span></div><div><button type="button">Kholo</button> <button type="button" aria-label="Hatao">✕</button></div>`;
+    const [open, del] = row.querySelectorAll("button");
+    open.onclick = () => { restore(d); window.scrollTo({top:0}); };
+    del.onclick = () => { if (confirm(k + " ka hisab hatana hai?")){ delete days[k]; store("momosDays", days); renderHist(); } };
+    box.appendChild(row);
+  });
+}
+
+function restore(d){
+  $("date").value = d.date;
+  INPUTS.forEach(k => $(k).value = d[k] ?? "");
+  exps = (d.exps && d.exps.length ? d.exps : [{n:"",a:""}]).map(e => ({...e}));
+  $("kCash").checked = d.kCash !== false;
+  renderExps(); render();
+}
+
+function today(){
+  const t = new Date();
+  return t.getFullYear() + "-" + String(t.getMonth() + 1).padStart(2, "0") + "-" + String(t.getDate()).padStart(2, "0");
+}
+
+$("addExp").onclick = () => { exps.push({n:"",a:""}); renderExps(); };
+$("save").onclick = () => {
+  const s = snapshot();
+  if (!s.date){ alert("Pehle tareekh chuno."); return; }
+  const days = load("momosDays", {});
+  days[s.date] = s;
+  store("momosDays", days);
+  renderHist();
+  $("save").textContent = "Save ho gaya";
+  setTimeout(() => $("save").textContent = "Aaj ka hisab save karo", 1500);
+};
+$("copy").onclick = async () => {
+  const r = last || calc();
+  const t = `Momos hisab ${$("date").value}\n` + r.lines.map(l => `${l[0]}: ${inr(l[2])}`).join("\n") +
+    `\nKul sale: ${inr(r.sale)}\nCash+online: ${inr(r.mila)}\nKharcha: ${inr(r.kharcha)}\n` +
+    (Math.abs(r.kami) < 0.5 ? "Hisab sahi" : r.kami > 0 ? "Kami: " + inr(r.kami) : "Zyada: " + inr(-r.kami));
+  try{ await navigator.clipboard.writeText(t); $("copy").textContent = "Copy ho gaya"; }
+  catch(e){ prompt("Ye text copy karo:", t); }
+  setTimeout(() => $("copy").textContent = "WhatsApp text copy", 1500);
+};
+$("reset").onclick = () => {
+  if (!confirm("Saare numbers saaf karne hain? Bache hue pcs kal ke gaye me jodna mat bhoolna.")) return;
+  INPUTS.forEach(k => $(k).value = "");
+  exps = [{n:"",a:""}];
+  $("date").value = today();
+  renderExps(); render();
+};
+
+INPUTS.forEach(k => $(k).addEventListener("input", render));
+$("kCash").addEventListener("change", render);
+RATES.forEach(k => $(k).addEventListener("input", () => { store("momosRates", Object.fromEntries(RATES.map(x => [x, $(x).value]))); render(); }));
+
+const saved = load("momosRates", null);
+if (saved) RATES.forEach(k => { if (saved[k]) $(k).value = saved[k]; });
+$("date").value = today();
+renderExps(); render(); renderHist();
+</script>
+</body>
+</html>
