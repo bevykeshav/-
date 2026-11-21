@@ -132,7 +132,8 @@ nav .in{max-width:600px;margin:0 auto}
 <div class="pane" id="p4" aria-live="polite">
 <h2>5. Hisab</h2>
 <div class="verdict" id="verdict"><div class="t" id="vt"></div><div class="v" id="vv"></div></div>
-<div class="card"><table id="tbl"></table><div class="info bad" id="warn" hidden style="margin-top:10px"></div></div>
+<div class="card"><h3>Kitni sale honi chahiye</h3><table id="tbase"></table></div>
+<div class="card"><h3>Plate ke hisab se sale</h3><table id="tbl"></table><div class="info bad" id="warn" hidden style="margin-top:10px"></div></div>
 <div class="acts">
 <button type="button" class="main" id="save">Aaj ka hisab save karo</button>
 <button type="button" id="copy">WhatsApp text copy karo</button>
@@ -191,7 +192,11 @@ function calc(){
   const warns = [];
   if (vegSteam < 0) warns.push("Veg steam pcs minus me hain. Veg ki ginti ya fried plate check karo.");
   if (panSteam < 0) warns.push("Paneer steam pcs minus me hain. Paneer, fried ya cream plate ki ginti check karo.");
-  return {lines, sale, kharcha, mila, udh: num("udh"), expected, actual, kami: expected - actual,
+  const base = num("gV") * vs + num("gP") * ps;
+  const extra = num("fV") * (num("rVF") - pcs * vs) + num("fP") * (num("rPF") - pcs * ps) + num("cr") * (num("rCr") - pcs * ps);
+  const minusBache = num("bV") * vs + num("bP") * ps;
+  const minusKharab = num("kV") * vs + num("kP") * ps;
+  return {base, extra, minusBache, minusKharab, lines, sale, kharcha, mila, udh: num("udh"), expected, actual, kami: expected - actual,
     waste: num("kV") * vs + num("kP") * ps, warns, vegSold, panSold, vegSteam, panSteam};
 }
 
@@ -206,7 +211,7 @@ function verdictOf(r){
 function render(){
   const r = calc(); last = r;
   const [cls, big, sub] = verdictOf(r);
-  $("info0").textContent = `Veg bika ${r.vegSold} pcs, paneer bika ${r.panSold} pcs.`;
+  $("info0").textContent = `Base sale ${inr(r.base)} (gaye pcs × steam rate). Veg bika ${r.vegSold} pcs, paneer bika ${r.panSold} pcs.`;
   $("info0").className = "info" + (r.vegSold < 0 || r.panSold < 0 ? " bad" : "");
   $("info1").textContent = `Plain steam bacha: veg ${r.vegSteam} pcs, paneer ${r.panSteam} pcs.`;
   $("info1").className = "info" + (r.warns.length ? " bad" : "");
@@ -221,6 +226,15 @@ function render(){
   h += `<tr class="sep"><td>Gina hua total</td><td>${inr(r.actual)}</td></tr>`;
   if (r.waste) h += `<tr><td>Kharab maal ka nuksaan</td><td>${inr(r.waste)}</td></tr>`;
   $("tbl").innerHTML = h;
+  const pc = num("rPcs") || 10, rv = Math.round(num("rVS") / pc * 100) / 100, rp = Math.round(num("rPS") / pc * 100) / 100;
+  let b = `<tr><td>Veg steam <small>${num("gV")} pcs × ₹${rv}</small></td><td>${inr(num("gV") * num("rVS") / pc)}</td></tr>`;
+  b += `<tr><td>Paneer steam <small>${num("gP")} pcs × ₹${rp}</small></td><td>${inr(num("gP") * num("rPS") / pc)}</td></tr>`;
+  b += `<tr class="sep"><td>Base total</td><td>${inr(r.base)}</td></tr>`;
+  if (r.extra) b += `<tr><td>Fried aur cream ka extra</td><td>${r.extra < 0 ? "− " : "+ "}${inr(Math.abs(r.extra))}</td></tr>`;
+  if (r.minusBache) b += `<tr><td>Bache hue pcs</td><td>− ${inr(r.minusBache)}</td></tr>`;
+  if (r.minusKharab) b += `<tr><td>Kharab pcs</td><td>− ${inr(r.minusKharab)}</td></tr>`;
+  b += `<tr class="sep"><td>Kul sale honi chahiye</td><td>${inr(r.sale)}</td></tr>`;
+  $("tbase").innerHTML = b;
   $("warn").hidden = !r.warns.length;
   $("warn").textContent = r.warns.join(" ");
 }
