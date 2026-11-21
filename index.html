@@ -135,8 +135,9 @@ nav .in{max-width:600px;margin:0 auto}
 <div class="card"><h3>Kitni sale honi chahiye</h3><table id="tbase"></table></div>
 <div class="card"><h3>Plate ke hisab se sale</h3><table id="tbl"></table><div class="info bad" id="warn" hidden style="margin-top:10px"></div></div>
 <div class="acts">
-<button type="button" class="main" id="save">Aaj ka hisab save karo</button>
-<button type="button" id="copy">WhatsApp text copy karo</button>
+<button type="button" class="main" id="wa">WhatsApp par bhejo</button>
+<button type="button" id="save">Aaj ka hisab save karo</button>
+<button type="button" id="copy">Text copy karo</button>
 <button type="button" id="reset">Naya din shuru karo</button>
 </div>
 <h2 style="margin-top:22px">Purane din</h2>
@@ -153,6 +154,9 @@ nav .in{max-width:600px;margin:0 auto}
 const $ = id => document.getElementById(id);
 const num = id => parseFloat($(id).value) || 0;
 const inr = v => "₹" + Math.round(v).toLocaleString("en-IN");
+const pq = (v, p) => [v ? "veg " + v : "", p ? "paneer " + p : ""].filter(Boolean).join(", ") + " pcs";
+const esc = t => String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const spent = () => exps.filter(e => parseFloat(e.a));
 const INPUTS = ["gV","bV","kV","gP","bP","kP","fV","fP","cr","cash","online","udh"];
 const RATES = ["rVS","rVF","rPS","rPF","rCr","rPcs"];
 const STEPS = ["Maal","Plate","Kharcha","Paisa","Hisab"];
@@ -223,6 +227,7 @@ function render(){
   if (r.udh) h += `<tr><td>Udhaar ya free</td><td>− ${inr(r.udh)}</td></tr><tr><td>Milna chahiye</td><td>${inr(r.expected)}</td></tr>`;
   h += `<tr><td>Cash + online</td><td>${inr(r.mila)}</td></tr>`;
   h += `<tr><td>Kharcha <small>${$("kCash").checked ? "cash se" : "alag se"}</small></td><td>${inr(r.kharcha)}</td></tr>`;
+  spent().forEach(e => { h += `<tr><td><small>&nbsp;&nbsp;• ${esc(e.n || "Kharcha")}</small></td><td><small>${inr(parseFloat(e.a))}</small></td></tr>`; });
   h += `<tr class="sep"><td>Gina hua total</td><td>${inr(r.actual)}</td></tr>`;
   if (r.waste) h += `<tr><td>Kharab maal ka nuksaan</td><td>${inr(r.waste)}</td></tr>`;
   $("tbl").innerHTML = h;
@@ -231,8 +236,8 @@ function render(){
   b += `<tr><td>Paneer steam <small>${num("gP")} pcs × ₹${rp}</small></td><td>${inr(num("gP") * num("rPS") / pc)}</td></tr>`;
   b += `<tr class="sep"><td>Base total</td><td>${inr(r.base)}</td></tr>`;
   if (r.extra) b += `<tr><td>Fried aur cream ka extra</td><td>${r.extra < 0 ? "− " : "+ "}${inr(Math.abs(r.extra))}</td></tr>`;
-  if (r.minusBache) b += `<tr><td>Bache hue pcs</td><td>− ${inr(r.minusBache)}</td></tr>`;
-  if (r.minusKharab) b += `<tr><td>Kharab pcs</td><td>− ${inr(r.minusKharab)}</td></tr>`;
+  if (r.minusBache) b += `<tr><td>Bache hue pcs <small>${pq(num("bV"), num("bP"))}</small></td><td>− ${inr(r.minusBache)}</td></tr>`;
+  if (r.minusKharab) b += `<tr><td>Kharab pcs <small>${pq(num("kV"), num("kP"))}</small></td><td>− ${inr(r.minusKharab)}</td></tr>`;
   b += `<tr class="sep"><td>Kul sale honi chahiye</td><td>${inr(r.sale)}</td></tr>`;
   $("tbase").innerHTML = b;
   $("warn").hidden = !r.warns.length;
@@ -272,7 +277,7 @@ function renderExps(){
     d.innerHTML = `<input type="text" placeholder="Kis cheez ka" aria-label="Kharcha naam"><input type="number" inputmode="numeric" placeholder="₹" aria-label="Rakam"><button type="button" aria-label="Hatao">✕</button>`;
     const [n, a, b] = d.children;
     n.value = e.n; a.value = e.a;
-    n.oninput = () => { exps[i].n = n.value; };
+    n.oninput = () => { exps[i].n = n.value; render(); };
     a.oninput = () => { exps[i].a = a.value; render(); };
     b.onclick = () => { exps.splice(i, 1); renderExps(); render(); };
     $("exps").appendChild(d);
@@ -337,14 +342,15 @@ function waText(){
     `Paneer steam: ${num("gP")} pcs × ₹${rp} = ${inr(num("gP") * num("rPS") / pc)}`,
     `*Base total: ${inr(r.base)}*`];
   if (r.extra) L.push(`Fried aur cream ka extra: ${r.extra < 0 ? "− " : "+ "}${inr(Math.abs(r.extra))}`);
-  if (r.minusBache) L.push(`Bache hue pcs: − ${inr(r.minusBache)}`);
-  if (r.minusKharab) L.push(`Kharab pcs: − ${inr(r.minusKharab)}`);
+  if (r.minusBache) L.push(`Bache hue pcs (${pq(num("bV"), num("bP"))}): − ${inr(r.minusBache)}`);
+  if (r.minusKharab) L.push(`Kharab pcs (${pq(num("kV"), num("kP"))}): − ${inr(r.minusKharab)}`);
   L.push(`*Kul sale honi chahiye: ${inr(r.sale)}*`, "", "*Plate ke hisab se sale*");
   r.lines.forEach(l => L.push(`${l[0]} (${l[1]}): ${inr(l[2])}`));
   L.push(`*Kul sale: ${inr(r.sale)}*`, "", "*Paisa*");
   if (r.udh) L.push(`Udhaar ya free: − ${inr(r.udh)}`, `Milna chahiye: ${inr(r.expected)}`);
   L.push(`Cash + online: ${inr(r.mila)}`,
     `Kharcha (${$("kCash").checked ? "cash se" : "alag se"}): ${inr(r.kharcha)}`,
+    ...spent().map(e => `   • ${e.n || "Kharcha"}: ${inr(parseFloat(e.a))}`),
     `Gina hua total: ${inr(r.actual)}`);
   if (r.waste) L.push(`Kharab maal ka nuksaan: ${inr(r.waste)}`);
   L.push("", cls === "ok" ? `✅ *${big}*` : cls === "bad" ? `❌ *${big}* (${sub.toLowerCase()})` : cls === "warn" ? `⚠️ *${big}* (${sub.toLowerCase()})` : big);
@@ -354,7 +360,13 @@ $("copy").onclick = async () => {
   const t = waText();
   try{ await navigator.clipboard.writeText(t); $("copy").textContent = "Copy ho gaya ✓"; }
   catch(e){ prompt("Ye text copy karo:", t); }
-  setTimeout(() => $("copy").textContent = "WhatsApp text copy karo", 1500);
+  setTimeout(() => $("copy").textContent = "Text copy karo", 1500);
+};
+$("wa").onclick = () => {
+  const a = document.createElement("a");
+  a.href = "https://wa.me/?text=" + encodeURIComponent(waText());
+  a.target = "_blank"; a.rel = "noopener";
+  document.body.appendChild(a); a.click(); a.remove();
 };
 $("reset").onclick = () => {
   if (!confirm("Naya din shuru karna hai? Ghar se gaye pcs wahi rahenge, baaki numbers saaf ho jayenge.")) return;
