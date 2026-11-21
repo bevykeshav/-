@@ -165,7 +165,7 @@ document.querySelectorAll(".stp").forEach(el => {
   const id = el.dataset.id;
   el.innerHTML = `<span>${el.dataset.l}<small>${el.dataset.s}</small></span><button type="button" aria-label="Kam karo">−</button><input type="number" inputmode="numeric" id="${id}" placeholder="0"><button type="button" aria-label="Badhao">+</button>`;
   const [, minus, inp, plus] = el.children;
-  const bump = d => { inp.value = Math.max(0, (parseFloat(inp.value) || 0) + d); render(); };
+  const bump = d => { inp.value = Math.max(0, (parseFloat(inp.value) || 0) + d); inp.dispatchEvent(new Event("input")); };
   minus.onclick = () => bump(-1);
   plus.onclick = () => bump(1);
 });
@@ -328,17 +328,37 @@ $("save").onclick = () => {
   $("save").textContent = "Save ho gaya ✓";
   setTimeout(() => $("save").textContent = "Aaj ka hisab save karo", 1500);
 };
+function waText(){
+  const r = last, [cls, big, sub] = verdictOf(r);
+  const pc = num("rPcs") || 10, rv = Math.round(num("rVS") / pc * 100) / 100, rp = Math.round(num("rPS") / pc * 100) / 100;
+  const d = $("date").value.split("-").reverse().join("-");
+  const L = [`*Roz ka Momos Hisab* (${d})`, "", "*Kitni sale honi chahiye*",
+    `Veg steam: ${num("gV")} pcs × ₹${rv} = ${inr(num("gV") * num("rVS") / pc)}`,
+    `Paneer steam: ${num("gP")} pcs × ₹${rp} = ${inr(num("gP") * num("rPS") / pc)}`,
+    `*Base total: ${inr(r.base)}*`];
+  if (r.extra) L.push(`Fried aur cream ka extra: ${r.extra < 0 ? "− " : "+ "}${inr(Math.abs(r.extra))}`);
+  if (r.minusBache) L.push(`Bache hue pcs: − ${inr(r.minusBache)}`);
+  if (r.minusKharab) L.push(`Kharab pcs: − ${inr(r.minusKharab)}`);
+  L.push(`*Kul sale honi chahiye: ${inr(r.sale)}*`, "", "*Plate ke hisab se sale*");
+  r.lines.forEach(l => L.push(`${l[0]} (${l[1]}): ${inr(l[2])}`));
+  L.push(`*Kul sale: ${inr(r.sale)}*`, "", "*Paisa*");
+  if (r.udh) L.push(`Udhaar ya free: − ${inr(r.udh)}`, `Milna chahiye: ${inr(r.expected)}`);
+  L.push(`Cash + online: ${inr(r.mila)}`,
+    `Kharcha (${$("kCash").checked ? "cash se" : "alag se"}): ${inr(r.kharcha)}`,
+    `Gina hua total: ${inr(r.actual)}`);
+  if (r.waste) L.push(`Kharab maal ka nuksaan: ${inr(r.waste)}`);
+  L.push("", cls === "ok" ? `✅ *${big}*` : cls === "bad" ? `❌ *${big}* (${sub.toLowerCase()})` : cls === "warn" ? `⚠️ *${big}* (${sub.toLowerCase()})` : big);
+  return L.join("\n");
+}
 $("copy").onclick = async () => {
-  const r = last, [, big] = verdictOf(r);
-  const t = `Momos hisab ${$("date").value}\n` + r.lines.map(l => `${l[0]}: ${inr(l[2])}`).join("\n") +
-    `\nKul sale: ${inr(r.sale)}\nCash + online: ${inr(r.mila)}\nKharcha: ${inr(r.kharcha)}\n${big}`;
+  const t = waText();
   try{ await navigator.clipboard.writeText(t); $("copy").textContent = "Copy ho gaya ✓"; }
   catch(e){ prompt("Ye text copy karo:", t); }
   setTimeout(() => $("copy").textContent = "WhatsApp text copy karo", 1500);
 };
 $("reset").onclick = () => {
-  if (!confirm("Saare numbers saaf karke naya din shuru karna hai? Bache hue pcs kal ke gaye me jodna mat bhoolna.")) return;
-  INPUTS.forEach(k => $(k).value = "");
+  if (!confirm("Naya din shuru karna hai? Ghar se gaye pcs wahi rahenge, baaki numbers saaf ho jayenge.")) return;
+  INPUTS.forEach(k => { if (k !== "gV" && k !== "gP") $(k).value = ""; });
   exps = []; seen = 0; $("date").value = today();
   renderExps(); render(); show(0);
 };
@@ -349,6 +369,9 @@ RATES.forEach(k => $(k).addEventListener("input", () => { store("momosRates", Ob
 const saved = load("momosRates", null);
 if (saved) RATES.forEach(k => { if (saved[k]) $(k).value = saved[k]; });
 $("date").value = today();
+const gs = load("momosGaye", null);
+if (gs){ $("gV").value = gs.gV || ""; $("gP").value = gs.gP || ""; }
+["gV","gP"].forEach(k => $(k).addEventListener("input", () => store("momosGaye", {gV: $("gV").value, gP: $("gP").value})));
 exps = [{n: "Pyaaz", a: ""}];
 renderExps(); render(); renderHist(); show(0);
 </script>
