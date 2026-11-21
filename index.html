@@ -5,121 +5,148 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Roz ka Momos Hisab</title>
 <style>
-:root{--bg:#eef3f1;--card:#fff;--ink:#17302b;--mute:#5d726d;--line:#d3dfdb;--brand:#0f6b5c;--brand-ink:#fff;--bad:#b3261e;--warn:#9a6200;--ok:#0f6b5c;--chip:#e3f0ec;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1c19;--card:#172823;--ink:#e6f1ee;--mute:#9bb3ad;--line:#2a403a;--brand:#3fc2aa;--brand-ink:#06201b;--bad:#ff8a80;--warn:#f1b84b;--ok:#5fd8bf;--chip:#1f3730;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0f1c19;--card:#172823;--ink:#e6f1ee;--mute:#9bb3ad;--line:#2a403a;--brand:#3fc2aa;--brand-ink:#06201b;--bad:#ff8a80;--warn:#f1b84b;--ok:#5fd8bf;--chip:#1f3730;color-scheme:dark}
+:root{--bg:#f4f5fb;--card:#fff;--ink:#1b2150;--mute:#666f98;--line:#dfe2f2;--brand:#3b47c4;--brand-ink:#fff;--acc:#ffb020;--bad:#c62828;--warn:#a86400;--ok:#1b7f4b;--chip:#e9ebfa;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10142e;--card:#1a1f45;--ink:#edf0ff;--mute:#9aa3d6;--line:#2c3366;--brand:#7f8bff;--brand-ink:#0d1130;--acc:#ffc23d;--bad:#ff8f8f;--warn:#ffc23d;--ok:#6fe0a3;--chip:#252b5c;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#10142e;--card:#1a1f45;--ink:#edf0ff;--mute:#9aa3d6;--line:#2c3366;--brand:#7f8bff;--brand-ink:#0d1130;--acc:#ffc23d;--bad:#ff8f8f;--warn:#ffc23d;--ok:#6fe0a3;--chip:#252b5c;color-scheme:dark}
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif}
-main{max-width:640px;margin:0 auto;padding:16px 14px 40px}
-h1{font-size:1.35rem;margin:0 0 2px}
-.sub{color:var(--mute);margin:0 0 14px;font-size:.92rem}
-section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
-h2{font-size:1rem;margin:0 0 10px}
-.hint{color:var(--mute);font-size:.85rem;margin:-4px 0 10px}
-label{display:block;font-size:.85rem;color:var(--mute);margin-bottom:3px}
-input[type=number],input[type=text],input[type=date]{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;min-height:44px}
-input:focus-visible,button:focus-visible{outline:3px solid var(--brand);outline-offset:1px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:4;padding:10px 14px 8px;max-width:600px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+h1{font-size:1.2rem;margin:0}
+.top input{width:auto;min-height:40px;padding:6px 8px;font-size:.9rem}
+.dots{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px}
+.dot{min-height:44px;padding:4px 2px;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--mute);font-size:.8rem;font-weight:600;line-height:1.15}
+.dot.on{border-color:var(--brand);color:var(--brand)}
+.dot.done{background:var(--chip)}
+main{max-width:600px;margin:0 auto;padding:6px 14px 150px}
+.pane{display:none}.pane.on{display:block}
+h2{font-size:1.3rem;margin:8px 0 2px}
+.help{color:var(--mute);margin:0 0 12px;font-size:.95rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+.card h3{margin:0 0 10px;font-size:1.05rem}
+.stp{display:grid;grid-template-columns:1fr 56px 96px 56px;align-items:center;gap:8px;margin-bottom:10px}
+.stp:last-child{margin-bottom:0}
+.stp span{font-weight:600}
+.stp small{display:block;color:var(--mute);font-weight:400;font-size:.8rem}
+.stp button{min-height:56px;font-size:1.6rem;font-weight:700;border-radius:14px;padding:0}
+.stp input{text-align:center;font-size:1.4rem;font-weight:700;min-height:56px;padding:4px}
+input[type=number],input[type=text],input[type=date]{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:10px 12px;min-height:48px}
+input:focus-visible,button:focus-visible{outline:3px solid var(--acc);outline-offset:1px}
+button{font:inherit;color:var(--ink);background:var(--chip);border:0;border-radius:12px;min-height:48px;padding:0 16px;cursor:pointer;font-weight:600}
+button.main{background:var(--brand);color:var(--brand-ink)}
+.info{background:var(--chip);border-radius:12px;padding:10px 12px;font-size:.95rem}
+.info.bad{color:var(--bad)}
+.money{position:relative;margin-bottom:12px}
+.money label{display:block;font-weight:600;margin-bottom:4px}
+.money b{position:absolute;left:14px;bottom:11px;font-size:1.3rem;color:var(--mute)}
+.money input{padding-left:34px;font-size:1.4rem;font-weight:700;min-height:56px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chips button{background:var(--card);border:2px solid var(--line)}
+.exp{display:grid;grid-template-columns:1fr 110px 48px;gap:8px;margin-bottom:8px}
+.sw{display:flex;align-items:center;gap:12px;font-weight:600;min-height:48px}
+.sw input{width:26px;height:26px;accent-color:var(--brand)}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.row{display:grid;grid-template-columns:64px 1fr 1fr 1fr;gap:8px;align-items:end;margin-bottom:8px}
-.row b{padding-bottom:12px}
-.colh{font-size:.8rem;color:var(--mute)}
-details summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
-.exp{display:grid;grid-template-columns:1fr 100px 44px;gap:8px;margin-bottom:8px}
-button{font:inherit;min-height:44px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:0 14px;cursor:pointer}
-button.main{background:var(--brand);color:var(--brand-ink);border-color:var(--brand);font-weight:600}
-.chk{display:flex;gap:8px;align-items:center;margin-top:8px;color:var(--ink);font-size:.95rem}
-.chk input{width:22px;height:22px}
-#res{position:sticky;bottom:8px;border:2px solid var(--brand)}
-.big{font-size:1.5rem;font-weight:700;margin:2px 0 8px}
-.big.bad{color:var(--bad)}.big.warn{color:var(--warn)}.big.ok{color:var(--ok)}
-table{width:100%;border-collapse:collapse;font-size:.92rem}
-td{padding:3px 0;vertical-align:top}td:last-child{text-align:right;white-space:nowrap}
-tr.sep td{border-top:1px solid var(--line);padding-top:6px;font-weight:600}
-.note{font-size:.85rem;color:var(--warn);margin:6px 0 0}
-.acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.hist{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line)}
-.hist small{color:var(--mute)}
-.tag{background:var(--chip);border-radius:6px;padding:2px 8px;font-size:.85rem}
-@media (prefers-reduced-motion:no-preference){.big{transition:color .2s}}
+.rate label{display:block;font-size:.85rem;color:var(--mute);margin-bottom:3px}
+.verdict{border-radius:16px;padding:18px;text-align:center;margin-bottom:12px;border:3px solid var(--line);background:var(--card)}
+.verdict .t{font-size:.95rem;color:var(--mute)}
+.verdict .v{font-size:2.2rem;font-weight:800}
+.verdict.ok{border-color:var(--ok)}.verdict.ok .v{color:var(--ok)}
+.verdict.bad{border-color:var(--bad)}.verdict.bad .v{color:var(--bad)}
+.verdict.warn{border-color:var(--warn)}.verdict.warn .v{color:var(--warn)}
+table{width:100%;border-collapse:collapse}
+td{padding:5px 0;vertical-align:top}td:last-child{text-align:right;white-space:nowrap;font-weight:600}
+tr.sep td{border-top:2px solid var(--line);padding-top:8px;font-weight:700}
+small{color:var(--mute)}
+.acts{display:grid;gap:8px}
+.hist{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-top:1px solid var(--line)}
+.hist .b{display:flex;gap:6px}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));z-index:4}
+nav .in{max-width:600px;margin:0 auto}
+#live{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;font-weight:700}
+#live small{font-weight:400}
+#live .bad{color:var(--bad)}#live .warn{color:var(--warn)}#live .ok{color:var(--ok)}
+.nb{display:grid;grid-template-columns:1fr 2fr;gap:10px}
+.nb button{min-height:54px;font-size:1.05rem}
+@media (max-width:380px){.stp{grid-template-columns:1fr 48px 78px 48px}.stp button{min-height:52px}}
 </style>
 </head>
 <body>
+<header>
+<div class="top"><h1>Roz ka Momos Hisab</h1><input type="date" id="date" aria-label="Tareekh"></div>
+<div class="dots" id="dots"></div>
+</header>
+
 <main>
-<h1>Roz ka Momos Hisab</h1>
-<p class="sub">Dukan band karte waqt numbers bharo, kami turant dikh jayegi.</p>
-
-<section>
-<label for="date">Tareekh</label>
-<input type="date" id="date">
-</section>
-
-<section>
-<h2>Ghar se kitne pcs gaye, bache, kharab</h2>
-<div class="row colh"><span></span><span>Gaye</span><span>Bache</span><span>Kharab</span></div>
-<div class="row"><b>Veg</b><input type="number" inputmode="numeric" id="gV"><input type="number" inputmode="numeric" id="bV"><input type="number" inputmode="numeric" id="kV"></div>
-<div class="row"><b>Paneer</b><input type="number" inputmode="numeric" id="gP"><input type="number" inputmode="numeric" id="bP"><input type="number" inputmode="numeric" id="kP"></div>
-<p class="hint">Bache hue pcs wo jo kal chal jayenge.</p>
-</section>
-
-<section>
-<h2>Kitni plate alag se bani</h2>
-<p class="hint">Inke pcs upar ke bike hue pcs me se apne aap kat jayenge.</p>
-<div class="g3">
-<div><label for="fV">Veg fried</label><input type="number" inputmode="numeric" id="fV"></div>
-<div><label for="fP">Paneer fried</label><input type="number" inputmode="numeric" id="fP"></div>
-<div><label for="cr">Cream momos</label><input type="number" inputmode="numeric" id="cr"></div>
+<div class="pane" id="p0">
+<h2>1. Maal ki ginti</h2>
+<p class="help">Ghar se kitne pcs le gaye, kitne wapas aaye aur kitne kharab hue.</p>
+<div class="card"><h3>Veg momos</h3>
+<div class="stp" data-id="gV" data-l="Ghar se gaye" data-s="pcs"></div>
+<div class="stp" data-id="bV" data-l="Bache wapas" data-s="kal chal jayenge"></div>
+<div class="stp" data-id="kV" data-l="Kharab" data-s="pcs"></div></div>
+<div class="card"><h3>Paneer momos</h3>
+<div class="stp" data-id="gP" data-l="Ghar se gaye" data-s="pcs"></div>
+<div class="stp" data-id="bP" data-l="Bache wapas" data-s="kal chal jayenge"></div>
+<div class="stp" data-id="kP" data-l="Kharab" data-s="pcs"></div></div>
+<div class="info" id="info0"></div>
 </div>
-</section>
 
-<section>
-<h2>Kharcha</h2>
-<div id="exps"></div>
-<button type="button" id="addExp">Kharcha jodo</button>
-<label class="chk"><input type="checkbox" id="kCash" checked> Kharcha galle ke cash se diya</label>
-</section>
+<div class="pane" id="p1">
+<h2>2. Alag plate</h2>
+<p class="help">Fried aur cream ki kitni plate bani. Inke pcs bike hue pcs me se apne aap kat jayenge.</p>
+<div class="card">
+<div class="stp" data-id="fV" data-l="Veg fried" data-s="plate"></div>
+<div class="stp" data-id="fP" data-l="Paneer fried" data-s="plate"></div>
+<div class="stp" data-id="cr" data-l="Cream momos" data-s="plate, paneer ke pcs"></div></div>
+<div class="info" id="info1"></div>
+</div>
 
-<section>
-<h2>Paisa mila</h2>
+<div class="pane" id="p2">
+<h2>3. Kharcha</h2>
+<p class="help">Aaj dukan par jo kharcha hua. Neeche se chuno ya khud likho.</p>
+<div class="chips" id="chips"></div>
+<div class="card"><div id="exps"></div><p class="help" id="noexp" style="margin:0">Abhi koi kharcha nahi joda.</p></div>
+<label class="card sw"><input type="checkbox" id="kCash" checked> Kharcha galle ke cash se diya</label>
+</div>
+
+<div class="pane" id="p3">
+<h2>4. Paisa mila</h2>
+<p class="help">Galle me gine hue cash aur online ka total.</p>
+<div class="money"><label for="cash">Cash</label><b>₹</b><input type="number" inputmode="numeric" id="cash"></div>
+<div class="money"><label for="online">Online</label><b>₹</b><input type="number" inputmode="numeric" id="online"></div>
+<div class="money"><label for="udh">Udhaar ya free gaya (agar ho)</label><b>₹</b><input type="number" inputmode="numeric" id="udh"></div>
+<div class="card rate"><h3>Rate (plate ka)</h3>
 <div class="g2">
-<div><label for="cash">Cash</label><input type="number" inputmode="numeric" id="cash"></div>
-<div><label for="online">Online</label><input type="number" inputmode="numeric" id="online"></div>
-</div>
-<div style="margin-top:10px"><label for="udh">Udhaar ya free gaya (₹)</label><input type="number" inputmode="numeric" id="udh"></div>
-</section>
-
-<section>
-<details>
-<summary>Rate badlo</summary>
-<div class="g3" style="margin-top:6px">
-<div><label for="rVS">Veg steam plate</label><input type="number" id="rVS" value="60"></div>
-<div><label for="rVF">Veg fried plate</label><input type="number" id="rVF" value="70"></div>
-<div><label for="rPS">Paneer steam plate</label><input type="number" id="rPS" value="80"></div>
-<div><label for="rPF">Paneer fried plate</label><input type="number" id="rPF" value="90"></div>
-<div><label for="rCr">Cream plate</label><input type="number" id="rCr" value="150"></div>
+<div><label for="rVS">Veg steam</label><input type="number" id="rVS" value="60"></div>
+<div><label for="rVF">Veg fried</label><input type="number" id="rVF" value="70"></div>
+<div><label for="rPS">Paneer steam</label><input type="number" id="rPS" value="80"></div>
+<div><label for="rPF">Paneer fried</label><input type="number" id="rPF" value="90"></div>
+<div><label for="rCr">Cream</label><input type="number" id="rCr" value="150"></div>
 <div><label for="rPcs">Pcs per plate</label><input type="number" id="rPcs" value="10"></div>
+</div></div>
 </div>
-</details>
-</section>
 
-<section id="res" aria-live="polite">
-<div id="verdict" class="big">Numbers bharo</div>
-<table id="tbl"></table>
-<p class="note" id="warn" hidden></p>
+<div class="pane" id="p4" aria-live="polite">
+<h2>5. Hisab</h2>
+<div class="verdict" id="verdict"><div class="t" id="vt"></div><div class="v" id="vv"></div></div>
+<div class="card"><table id="tbl"></table><div class="info bad" id="warn" hidden style="margin-top:10px"></div></div>
 <div class="acts">
 <button type="button" class="main" id="save">Aaj ka hisab save karo</button>
-<button type="button" id="copy">WhatsApp text copy</button>
-<button type="button" id="reset">Naya din</button>
+<button type="button" id="copy">WhatsApp text copy karo</button>
+<button type="button" id="reset">Naya din shuru karo</button>
 </div>
-</section>
-
-<section>
-<h2>Purane din</h2>
-<div id="hist"><p class="hint">Abhi kuch save nahi hai.</p></div>
-</section>
+<h2 style="margin-top:22px">Purane din</h2>
+<div class="card" id="hist"></div>
+</div>
 </main>
+
+<nav><div class="in">
+<div id="live"></div>
+<div class="nb"><button type="button" id="back">Piche</button><button type="button" class="main" id="next">Aage</button></div>
+</div></nav>
 
 <script>
 const $ = id => document.getElementById(id);
@@ -127,155 +154,189 @@ const num = id => parseFloat($(id).value) || 0;
 const inr = v => "₹" + Math.round(v).toLocaleString("en-IN");
 const INPUTS = ["gV","bV","kV","gP","bP","kP","fV","fP","cr","cash","online","udh"];
 const RATES = ["rVS","rVF","rPS","rPF","rCr","rPcs"];
-let exps = [{n:"Pyaaz",a:""}];
-let last = null;
+const STEPS = ["Maal","Plate","Kharcha","Paisa","Hisab"];
+let exps = [], last = null, step = 0, seen = 0;
 
 function store(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
 function load(k, d){ try{ const r = localStorage.getItem(k); return r ? JSON.parse(r) : d; }catch(e){ return d; } }
 
+document.querySelectorAll(".stp").forEach(el => {
+  const id = el.dataset.id;
+  el.innerHTML = `<span>${el.dataset.l}<small>${el.dataset.s}</small></span><button type="button" aria-label="Kam karo">−</button><input type="number" inputmode="numeric" id="${id}" placeholder="0"><button type="button" aria-label="Badhao">+</button>`;
+  const [, minus, inp, plus] = el.children;
+  const bump = d => { inp.value = Math.max(0, (parseFloat(inp.value) || 0) + d); render(); };
+  minus.onclick = () => bump(-1);
+  plus.onclick = () => bump(1);
+});
+
 function calc(){
   const pcs = num("rPcs") || 10;
-  const pv = {vs:num("rVS")/pcs, ps:num("rPS")/pcs};
+  const vs = num("rVS") / pcs, ps = num("rPS") / pcs;
   const vegSold = num("gV") - num("bV") - num("kV");
   const panSold = num("gP") - num("bP") - num("kP");
-  const vegFriedPcs = num("fV") * pcs;
-  const panFriedPcs = num("fP") * pcs;
-  const creamPcs = num("cr") * pcs;
-  const vegSteamPcs = vegSold - vegFriedPcs;
-  const panSteamPcs = panSold - panFriedPcs - creamPcs;
+  const vegSteam = vegSold - num("fV") * pcs;
+  const panSteam = panSold - num("fP") * pcs - num("cr") * pcs;
   const lines = [
-    ["Veg steam", vegSteamPcs + " pcs", vegSteamPcs * pv.vs],
+    ["Veg steam", vegSteam + " pcs", vegSteam * vs],
     ["Veg fried", num("fV") + " plate", num("fV") * num("rVF")],
-    ["Paneer steam", panSteamPcs + " pcs", panSteamPcs * pv.ps],
+    ["Paneer steam", panSteam + " pcs", panSteam * ps],
     ["Paneer fried", num("fP") + " plate", num("fP") * num("rPF")],
     ["Cream momos", num("cr") + " plate", num("cr") * num("rCr")]
   ];
   const sale = lines.reduce((s, l) => s + l[2], 0);
   const kharcha = exps.reduce((s, e) => s + (parseFloat(e.a) || 0), 0);
   const mila = num("cash") + num("online");
-  const udh = num("udh");
-  const expected = sale - udh;
+  const expected = sale - num("udh");
   const actual = mila + ($("kCash").checked ? kharcha : 0);
-  const wasteLoss = num("kV") * pv.vs + num("kP") * pv.ps;
   const warns = [];
-  if (vegSteamPcs < 0) warns.push("Veg steam pcs minus me hain. Veg gaye, bache ya fried plate ki ginti check karo.");
-  if (panSteamPcs < 0) warns.push("Paneer steam pcs minus me hain. Paneer gaye, bache, fried ya cream plate ki ginti check karo.");
-  return {lines, sale, kharcha, mila, udh, expected, actual, kami: expected - actual, wasteLoss, warns, vegSold, panSold};
+  if (vegSteam < 0) warns.push("Veg steam pcs minus me hain. Veg ki ginti ya fried plate check karo.");
+  if (panSteam < 0) warns.push("Paneer steam pcs minus me hain. Paneer, fried ya cream plate ki ginti check karo.");
+  return {lines, sale, kharcha, mila, udh: num("udh"), expected, actual, kami: expected - actual,
+    waste: num("kV") * vs + num("kP") * ps, warns, vegSold, panSold, vegSteam, panSteam};
+}
+
+function verdictOf(r){
+  const started = r.sale !== 0 || r.mila !== 0;
+  if (!started) return ["", "Numbers bharo", ""];
+  if (Math.abs(r.kami) < 0.5) return ["ok", "Hisab bilkul sahi", "Koi farak nahi"];
+  if (r.kami > 0) return ["bad", "Kami " + inr(r.kami), "Itna paisa kam hai"];
+  return ["warn", "Zyada " + inr(-r.kami), "Itna paisa zyada hai"];
 }
 
 function render(){
-  const r = calc();
-  last = r;
-  const started = r.sale !== 0 || r.mila !== 0;
-  const v = $("verdict");
-  if (!started){ v.className = "big"; v.textContent = "Numbers bharo"; }
-  else if (Math.abs(r.kami) < 0.5){ v.className = "big ok"; v.textContent = "Hisab bilkul sahi"; }
-  else if (r.kami > 0){ v.className = "big bad"; v.textContent = "Kami " + inr(r.kami); }
-  else { v.className = "big warn"; v.textContent = "Zyada " + inr(-r.kami); }
-  let h = r.lines.map(l => `<tr><td>${l[0]} <small>(${l[1]})</small></td><td>${inr(l[2])}</td></tr>`).join("");
+  const r = calc(); last = r;
+  const [cls, big, sub] = verdictOf(r);
+  $("info0").textContent = `Veg bika ${r.vegSold} pcs, paneer bika ${r.panSold} pcs.`;
+  $("info0").className = "info" + (r.vegSold < 0 || r.panSold < 0 ? " bad" : "");
+  $("info1").textContent = `Plain steam bacha: veg ${r.vegSteam} pcs, paneer ${r.panSteam} pcs.`;
+  $("info1").className = "info" + (r.warns.length ? " bad" : "");
+  $("live").innerHTML = `<small>Abhi tak</small><span class="${cls}">${big}</span>`;
+  const v = $("verdict"); v.className = "verdict " + cls;
+  $("vt").textContent = sub; $("vv").textContent = big;
+  let h = r.lines.map(l => `<tr><td>${l[0]} <small>${l[1]}</small></td><td>${inr(l[2])}</td></tr>`).join("");
   h += `<tr class="sep"><td>Kul sale</td><td>${inr(r.sale)}</td></tr>`;
   if (r.udh) h += `<tr><td>Udhaar ya free</td><td>− ${inr(r.udh)}</td></tr><tr><td>Milna chahiye</td><td>${inr(r.expected)}</td></tr>`;
   h += `<tr><td>Cash + online</td><td>${inr(r.mila)}</td></tr>`;
-  h += `<tr><td>Kharcha ${$("kCash").checked ? "(cash se)" : "(alag se)"}</td><td>${inr(r.kharcha)}</td></tr>`;
+  h += `<tr><td>Kharcha <small>${$("kCash").checked ? "cash se" : "alag se"}</small></td><td>${inr(r.kharcha)}</td></tr>`;
   h += `<tr class="sep"><td>Gina hua total</td><td>${inr(r.actual)}</td></tr>`;
-  if (r.wasteLoss) h += `<tr><td>Kharab maal ka nuksaan</td><td>${inr(r.wasteLoss)}</td></tr>`;
+  if (r.waste) h += `<tr><td>Kharab maal ka nuksaan</td><td>${inr(r.waste)}</td></tr>`;
   $("tbl").innerHTML = h;
-  const w = $("warn");
-  w.hidden = !r.warns.length;
-  w.textContent = r.warns.join(" ");
+  $("warn").hidden = !r.warns.length;
+  $("warn").textContent = r.warns.join(" ");
 }
+
+function show(i){
+  step = Math.max(0, Math.min(4, i)); seen = Math.max(seen, step);
+  for (let k = 0; k < 5; k++) $("p" + k).classList.toggle("on", k === step);
+  document.querySelectorAll(".dot").forEach((d, k) => {
+    d.classList.toggle("on", k === step);
+    d.classList.toggle("done", k < seen && k !== step);
+    if (k === step) d.setAttribute("aria-current", "step"); else d.removeAttribute("aria-current");
+  });
+  $("back").style.visibility = step === 0 ? "hidden" : "visible";
+  $("next").style.display = step === 4 ? "none" : "";
+  document.querySelector(".nb").style.gridTemplateColumns = step === 4 ? "1fr" : "1fr 2fr";
+  if (step === 4) $("back").textContent = "Kuch badalna hai"; else $("back").textContent = "Piche";
+  window.scrollTo({top: 0});
+}
+
+STEPS.forEach((s, i) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "dot"; b.textContent = (i + 1) + ". " + s;
+  b.onclick = () => show(i);
+  $("dots").appendChild(b);
+});
+$("back").onclick = () => show(step === 4 ? 0 : step - 1);
+$("next").onclick = () => show(step + 1);
 
 function renderExps(){
   $("exps").innerHTML = "";
+  $("noexp").hidden = exps.length > 0;
   exps.forEach((e, i) => {
     const d = document.createElement("div");
     d.className = "exp";
-    d.innerHTML = `<input type="text" placeholder="Kis cheez ka" aria-label="Kharcha naam"><input type="number" inputmode="numeric" placeholder="₹" aria-label="Kharcha rakam"><button type="button" aria-label="Hatao">✕</button>`;
+    d.innerHTML = `<input type="text" placeholder="Kis cheez ka" aria-label="Kharcha naam"><input type="number" inputmode="numeric" placeholder="₹" aria-label="Rakam"><button type="button" aria-label="Hatao">✕</button>`;
     const [n, a, b] = d.children;
     n.value = e.n; a.value = e.a;
     n.oninput = () => { exps[i].n = n.value; };
     a.oninput = () => { exps[i].a = a.value; render(); };
     b.onclick = () => { exps.splice(i, 1); renderExps(); render(); };
     $("exps").appendChild(d);
+    e.focus && (a.focus(), delete e.focus);
   });
 }
+["Pyaaz","Cream","Gas","Packing","Aur kuch"].forEach(n => {
+  const b = document.createElement("button");
+  b.type = "button"; b.textContent = "+ " + n;
+  b.onclick = () => { exps.push({n: n === "Aur kuch" ? "" : n, a: "", focus: true}); renderExps(); };
+  $("chips").appendChild(b);
+});
 
 function snapshot(){
-  const o = {date: $("date").value, exps: exps, kCash: $("kCash").checked};
+  const o = {date: $("date").value, exps, kCash: $("kCash").checked};
   INPUTS.forEach(k => o[k] = $(k).value);
-  o.kami = last ? Math.round(last.kami) : 0;
-  o.sale = last ? Math.round(last.sale) : 0;
+  o.kami = Math.round(last.kami); o.sale = Math.round(last.sale);
   return o;
 }
-
-function renderHist(){
-  const days = load("momosDays", {});
-  const keys = Object.keys(days).sort().reverse();
-  const box = $("hist");
-  if (!keys.length){ box.innerHTML = '<p class="hint">Abhi kuch save nahi hai.</p>'; return; }
-  box.innerHTML = "";
-  keys.forEach(k => {
-    const d = days[k];
-    const row = document.createElement("div");
-    row.className = "hist";
-    const status = Math.abs(d.kami) < 1 ? "sahi" : d.kami > 0 ? "kami " + inr(d.kami) : "zyada " + inr(-d.kami);
-    row.innerHTML = `<div><b>${k}</b><br><small>Sale ${inr(d.sale)}</small> <span class="tag">${status}</span></div><div><button type="button">Kholo</button> <button type="button" aria-label="Hatao">✕</button></div>`;
-    const [open, del] = row.querySelectorAll("button");
-    open.onclick = () => { restore(d); window.scrollTo({top:0}); };
-    del.onclick = () => { if (confirm(k + " ka hisab hatana hai?")){ delete days[k]; store("momosDays", days); renderHist(); } };
-    box.appendChild(row);
-  });
-}
-
 function restore(d){
   $("date").value = d.date;
   INPUTS.forEach(k => $(k).value = d[k] ?? "");
-  exps = (d.exps && d.exps.length ? d.exps : [{n:"",a:""}]).map(e => ({...e}));
+  exps = (d.exps || []).filter(e => e.n || e.a).map(e => ({n: e.n, a: e.a}));
   $("kCash").checked = d.kCash !== false;
-  renderExps(); render();
+  renderExps(); render(); seen = 4; show(4);
 }
-
+function renderHist(){
+  const days = load("momosDays", {}), keys = Object.keys(days).sort().reverse(), box = $("hist");
+  if (!keys.length){ box.innerHTML = '<p class="help" style="margin:0">Abhi koi din save nahi hai.</p>'; return; }
+  box.innerHTML = "";
+  keys.forEach((k, i) => {
+    const d = days[k];
+    const st = Math.abs(d.kami) < 1 ? "hisab sahi" : d.kami > 0 ? "kami " + inr(d.kami) : "zyada " + inr(-d.kami);
+    const row = document.createElement("div");
+    row.className = "hist"; if (!i) row.style.borderTop = "0";
+    row.innerHTML = `<div><b>${k}</b><br><small>Sale ${inr(d.sale)}, ${st}</small></div><div class="b"><button type="button">Kholo</button><button type="button" aria-label="Hatao">✕</button></div>`;
+    const [o, x] = row.querySelectorAll("button");
+    o.onclick = () => restore(d);
+    x.onclick = () => { if (confirm(k + " ka hisab hatana hai?")){ delete days[k]; store("momosDays", days); renderHist(); } };
+    box.appendChild(row);
+  });
+}
 function today(){
   const t = new Date();
   return t.getFullYear() + "-" + String(t.getMonth() + 1).padStart(2, "0") + "-" + String(t.getDate()).padStart(2, "0");
 }
 
-$("addExp").onclick = () => { exps.push({n:"",a:""}); renderExps(); };
 $("save").onclick = () => {
   const s = snapshot();
-  if (!s.date){ alert("Pehle tareekh chuno."); return; }
-  const days = load("momosDays", {});
-  days[s.date] = s;
-  store("momosDays", days);
+  if (!s.date){ alert("Pehle upar se tareekh chuno."); return; }
+  const days = load("momosDays", {}); days[s.date] = s; store("momosDays", days);
   renderHist();
-  $("save").textContent = "Save ho gaya";
+  $("save").textContent = "Save ho gaya ✓";
   setTimeout(() => $("save").textContent = "Aaj ka hisab save karo", 1500);
 };
 $("copy").onclick = async () => {
-  const r = last || calc();
+  const r = last, [, big] = verdictOf(r);
   const t = `Momos hisab ${$("date").value}\n` + r.lines.map(l => `${l[0]}: ${inr(l[2])}`).join("\n") +
-    `\nKul sale: ${inr(r.sale)}\nCash+online: ${inr(r.mila)}\nKharcha: ${inr(r.kharcha)}\n` +
-    (Math.abs(r.kami) < 0.5 ? "Hisab sahi" : r.kami > 0 ? "Kami: " + inr(r.kami) : "Zyada: " + inr(-r.kami));
-  try{ await navigator.clipboard.writeText(t); $("copy").textContent = "Copy ho gaya"; }
+    `\nKul sale: ${inr(r.sale)}\nCash + online: ${inr(r.mila)}\nKharcha: ${inr(r.kharcha)}\n${big}`;
+  try{ await navigator.clipboard.writeText(t); $("copy").textContent = "Copy ho gaya ✓"; }
   catch(e){ prompt("Ye text copy karo:", t); }
-  setTimeout(() => $("copy").textContent = "WhatsApp text copy", 1500);
+  setTimeout(() => $("copy").textContent = "WhatsApp text copy karo", 1500);
 };
 $("reset").onclick = () => {
-  if (!confirm("Saare numbers saaf karne hain? Bache hue pcs kal ke gaye me jodna mat bhoolna.")) return;
+  if (!confirm("Saare numbers saaf karke naya din shuru karna hai? Bache hue pcs kal ke gaye me jodna mat bhoolna.")) return;
   INPUTS.forEach(k => $(k).value = "");
-  exps = [{n:"",a:""}];
-  $("date").value = today();
-  renderExps(); render();
+  exps = []; seen = 0; $("date").value = today();
+  renderExps(); render(); show(0);
 };
 
 INPUTS.forEach(k => $(k).addEventListener("input", render));
 $("kCash").addEventListener("change", render);
 RATES.forEach(k => $(k).addEventListener("input", () => { store("momosRates", Object.fromEntries(RATES.map(x => [x, $(x).value]))); render(); }));
-
 const saved = load("momosRates", null);
 if (saved) RATES.forEach(k => { if (saved[k]) $(k).value = saved[k]; });
 $("date").value = today();
-renderExps(); render(); renderHist();
+exps = [{n: "Pyaaz", a: ""}];
+renderExps(); render(); renderHist(); show(0);
 </script>
 </body>
 </html>
